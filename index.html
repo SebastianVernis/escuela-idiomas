@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Idiomas Avanza - Escuela Digital de Idiomas</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon/COLORNOFONDO/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon/COLORNOFONDO/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon/COLORNOFONDO/apple-touch-icon.png">
+    <link rel="manifest" href="./assets/favicon/COLORNOFONDO/site.webmanifest">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+    <h2>Idiomas Avanza</h2>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#inicio" class="nav-link">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#cursos" class="nav-link">Cursos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#certificaciones" class="nav-link">Certificaciones</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#tienda" class="nav-link">Tienda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#contacto" class="nav-link">Contacto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link btn-login" onclick="openLoginModal()">Portal de Alumnos</a>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">Domina Nuevos Idiomas con Idiomas Avanza</h1>
+                <p class="hero-subtitle">Aprende inglés, francés y portugués con nuestros grupos conversacionales especializados y prepárate para certificaciones internacionales TOEFL, CAPLE y DAFL.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="scrollToSection('cursos')">Explorar Cursos</button>
+                    <button class="btn btn-secondary" onclick="openLoginModal()">Acceso Estudiantes</button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="hero-card">
+                    <i class="fas fa-globe"></i>
+                    <h3>3 Idiomas</h3>
+                    <p>Inglés, Francés, Portugués</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cursos Section -->
+    <section id="cursos" class="courses">
+        <div class="container">
+            <div class="section-header">
+                <h2>Nuestros Cursos</h2>
+                <p>Programas diseñados para todos los niveles y objetivos</p>
+            </div>
+            <div class="courses-grid">
+                <div class="course-card">
+                    <div class="course-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>Grupos Conversacionales</h3>
+                    <p>Practica con hablantes nativos en sesiones guiadas y no guiadas</p>
+                    <div class="course-price">$1,200 MXN/mes</div>
+                    <button class="btn btn-outline">Ver Detalles</button>
+                </div>
+                <div class="course-card">
+                    <div class="course-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3>Clases Individuales</h3>
+                    <p>Atención personalizada con profesores certificados</p>
+                    <div class="course-price">$1,800 MXN/mes</div>
+                    <button class="btn btn-outline">Ver Detalles</button>
+                </div>
+                <div class="course-card">
+                    <div class="course-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <h3>Preparación Certificaciones</h3>
+                    <p>Cursos especializados para TOEFL, CAPLE y DAFL</p>
+                    <div class="course-price">$2,500 MXN/mes</div>
+                    <button class="btn btn-outline">Ver Detalles</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certificaciones Section -->
+    <section id="certificaciones" class="certifications">
+        <div class="container">
+            <div class="section-header">
+                <h2>Certificaciones Internacionales</h2>
+                <p>Prepárate para los exámenes más reconocidos mundialmente</p>
+            </div>
+            <div class="cert-grid">
+                <div class="cert-card">
+                    <h3>TOEFL</h3>
+                    <p>Test of English as a Foreign Language</p>
+                    <div class="cert-features">
+                        <span>Inglés Académico</span>
+                        <span>Universidades USA</span>
+                        <span>Preparación Intensiva</span>
+                    </div>
+                </div>
+                <div class="cert-card">
+                    <h3>CAPLE</h3>
+                    <p>Centro de Avaliação de Português Língua Estrangeira</p>
+                    <div class="cert-features">
+                        <span>Portugués Certificado</span>
+                        <span>Reconocimiento Internacional</span>
+                        <span>Todos los Niveles</span>
+                    </div>
+                </div>
+                <div class="cert-card">
+                    <h3>DAFL</h3>
+                    <p>Diploma de Francés como Lengua Extranjera</p>
+                    <div class="cert-features">
+                        <span>Francés Oficial</span>
+                        <span>Marco Europeo</span>
+                        <span>Validez Permanente</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tienda Section -->
+    <section id="tienda" class="store">
+        <div class="container">
+            <div class="section-header">
+                <h2>Biblioteca Digital</h2>
+                <p>Accede a más de 1000 libros especializados en idiomas</p>
+            </div>
+            <div class="store-features">
+                <div class="feature-card">
+                    <i class="fas fa-book"></i>
+                    <h3>1000+ Libros</h3>
+                    <p>Biblioteca completa con libros especializados en inglés, francés y portugués</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-download"></i>
+                    <h3>Múltiples Formatos</h3>
+                    <p>Descarga en PDF, EPUB o escucha en formato audio</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-play"></i>
+                    <h3>Lectura Online</h3>
+                    <p>Lee o reproduce contenido directamente en la plataforma</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-magic"></i>
+                    <h3>Asignación Automática</h3>
+                    <p>Los libros se cargan automáticamente según tu paquete contratado</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contacto" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Contáctanos</h2>
+                <p>¿Tienes preguntas? Estamos aquí para ayudarte</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>Teléfono</h4>
+                            <p>+52 55 1234 5678</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p>info@idiomasavanza.mx</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Dirección</h4>
+                            <p>Ciudad de México, México</p>
+                        </div>
+                    </div>
+                </div>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <input type="text" placeholder="Nombre completo" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Correo electrónico" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Mensaje" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Idiomas Avanza</h3>
+                    <p>Tu escuela digital de idiomas especializada en grupos conversacionales y certificaciones internacionales.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Enlaces Rápidos</h4>
+                    <ul>
+                        <li><a href="#cursos">Cursos</a></li>
+                        <li><a href="#certificaciones">Certificaciones</a></li>
+                        <li><a href="#tienda">Biblioteca</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Síguenos</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Idiomas Avanza. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLoginModal()">&times;</span>
+            <h2>Portal de Alumnos</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Usuario:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Ingresar</button>
+            </form>
+            <p class="register-link">¿No tienes cuenta? <a href="#" onclick="openRegisterModal()">Regístrate aquí</a></p>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeRegisterModal()">&times;</span>
+            <h2>Registro de Alumno</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="regName">Nombre completo:</label>
+                    <input type="text" id="regName" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="regEmail">Correo electrónico:</label>
+                    <input type="email" id="regEmail" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="regUsername">Usuario:</label>
+                    <input type="text" id="regUsername" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">Contraseña:</label>
+                    <input type="password" id="regPassword" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Registrarse</button>
+            </form>
+            <p class="login-link">¿Ya tienes cuenta? <a href="#" onclick="openLoginModal()">Inicia sesión aquí</a></p>
+        </div>
+    </div>
+
+    <script src="utils.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+

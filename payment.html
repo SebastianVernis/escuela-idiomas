@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Realizar Pago - Idiomas Avanza</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="payment.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <h2>Idiomas Avanza</h2>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Inicio</a>
+                <a href="portal.html" class="nav-link">Portal</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="payment-main">
+        <div class="payment-container">
+            <!-- Package Selection -->
+            <section class="package-selection" id="packageSelection">
+                <div class="section-header">
+                    <h1>Selecciona tu Paquete</h1>
+                    <p>Elige el plan que mejor se adapte a tus necesidades</p>
+                </div>
+
+                <div class="packages-grid" id="packagesGrid">
+                    <!-- Los paquetes se cargarán dinámicamente -->
+                </div>
+            </section>
+
+            <!-- Payment Methods -->
+            <section class="payment-methods" id="paymentMethods" style="display: none;">
+                <div class="section-header">
+                    <h2>Método de Pago</h2>
+                    <p>Selecciona cómo deseas realizar tu pago</p>
+                </div>
+
+                <div class="selected-package" id="selectedPackage">
+                    <!-- Información del paquete seleccionado -->
+                </div>
+
+                <div class="payment-options">
+                    <div class="payment-option" onclick="selectPaymentMethod('stripe')">
+                        <div class="payment-icon">
+                            <i class="fab fa-stripe"></i>
+                        </div>
+                        <div class="payment-info">
+                            <h3>Tarjeta de Crédito/Débito</h3>
+                            <p>Pago seguro con Stripe</p>
+                            <span class="payment-badges">
+                                <i class="fab fa-cc-visa"></i>
+                                <i class="fab fa-cc-mastercard"></i>
+                                <i class="fab fa-cc-amex"></i>
+                            </span>
+                        </div>
+                        <div class="payment-radio">
+                            <input type="radio" name="payment_method" value="stripe" id="stripe">
+                        </div>
+                    </div>
+
+                    <div class="payment-option" onclick="selectPaymentMethod('clip')">
+                        <div class="payment-icon">
+                            <img src="https://clip.mx/assets/img/logo-clip.svg" alt="Clip" style="height: 30px;">
+                        </div>
+                        <div class="payment-info">
+                            <h3>Clip</h3>
+                            <p>Pago con Clip México</p>
+                            <span class="payment-badges">
+                                <span class="badge">SPEI</span>
+                                <span class="badge">Tarjetas</span>
+                            </span>
+                        </div>
+                        <div class="payment-radio">
+                            <input type="radio" name="payment_method" value="clip" id="clip">
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary btn-large" onclick="proceedToPayment()" id="proceedBtn" disabled>
+                    Continuar con el Pago
+                </button>
+            </section>
+
+            <!-- Stripe Payment Form -->
+            <section class="stripe-payment" id="stripePayment" style="display: none;">
+                <div class="section-header">
+                    <h2>Información de Pago</h2>
+                    <p>Completa los datos de tu tarjeta</p>
+                </div>
+
+                <div class="payment-form">
+                    <form id="payment-form">
+                        <div class="form-group">
+                            <label for="card-element">Información de la tarjeta</label>
+                            <div id="card-element">
+                                <!-- Stripe Elements se insertará aquí -->
+                            </div>
+                            <div id="card-errors" role="alert"></div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="cardholder-name">Nombre del titular</label>
+                                <input type="text" id="cardholder-name" placeholder="Nombre completo" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Correo electrónico</label>
+                                <input type="email" id="email" placeholder="tu@email.com" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" id="submit-payment" class="btn btn-primary btn-large">
+                            <span id="button-text">Pagar Ahora</span>
+                            <span id="spinner" class="spinner" style="display: none;"></span>
+                        </button>
+                    </form>
+                </div>
+
+                <div class="security-info">
+                    <div class="security-item">
+                        <i class="fas fa-lock"></i>
+                        <span>Pago 100% seguro</span>
+                    </div>
+                    <div class="security-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Encriptación SSL</span>
+                    </div>
+                    <div class="security-item">
+                        <i class="fas fa-credit-card"></i>
+                        <span>PCI DSS Compliant</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Clip Payment -->
+            <section class="clip-payment" id="clipPayment" style="display: none;">
+                <div class="section-header">
+                    <h2>Pago con Clip</h2>
+                    <p>Serás redirigido a la plataforma segura de Clip</p>
+                </div>
+
+                <div class="clip-info">
+                    <div class="clip-steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Redirección</h4>
+                                <p>Te redirigiremos a la plataforma de Clip</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Pago</h4>
+                                <p>Completa tu pago de forma segura</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Confirmación</h4>
+                                <p>Regresarás automáticamente a Idiomas Avanza</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary btn-large" onclick="processClipPayment()">
+                        <i class="fas fa-external-link-alt"></i>
+                        Ir a Clip
+                    </button>
+                </div>
+            </section>
+
+            <!-- Payment Success -->
+            <section class="payment-success" id="paymentSuccess" style="display: none;">
+                <div class="success-content">
+                    <div class="success-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h2>¡Pago Exitoso!</h2>
+                    <p>Tu pago ha sido procesado correctamente. Ya tienes acceso a tu paquete.</p>
+                    
+                    <div class="success-actions">
+                        <a href="portal.html" class="btn btn-primary">Ir al Portal</a>
+                        <a href="index.html" class="btn btn-outline">Volver al Inicio</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Payment Error -->
+            <section class="payment-error" id="paymentError" style="display: none;">
+                <div class="error-content">
+                    <div class="error-icon">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <h2>Error en el Pago</h2>
+                    <p id="errorMessage">Hubo un problema procesando tu pago. Por favor, intenta nuevamente.</p>
+                    
+                    <div class="error-actions">
+                        <button class="btn btn-primary" onclick="retryPayment()">Intentar Nuevamente</button>
+                        <a href="index.html" class="btn btn-outline">Volver al Inicio</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <p>Procesando pago...</p>
+        </div>
+    </div>
+
+    <script src="payment.js"></script>
+</body>
+</html>
+

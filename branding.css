@@ -1,0 +1,41 @@
+:root {
+  --azul-avanza: #0057B8;
+  --naranja-avanza: #FF7F11;
+  --verde-aprendizaje: #28A745;
+  --amarillo-inspirador: #FFD60A;
+  --blanco: #FFFFFF;
+  --gris-suave: #4A4A4A;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  color: var(--gris-suave);
+  background: var(--blanco);
+}
+
+h1, h2, h3 {
+  color: var(--azul-avanza);
+}
+
+a {
+  color: var(--naranja-avanza);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--amarillo-inspirador);
+}
+
+.btn-cta {
+  background: var(--naranja-avanza);
+  color: var(--blanco);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-cta:hover {
+  background: var(--amarillo-inspirador);
+}
+

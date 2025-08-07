@@ -1,0 +1,40 @@
+{
+    "name": "idiomasavanza/backend",
+    "description": "Backend API para Idiomas Avanza - Escuela Digital de Idiomas",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Idiomas Avanza Team",
+            "email": "dev@idiomasavanza.mx"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "stripe/stripe-php": "^10.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "IdiomasAvanza\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "IdiomasAvanza\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "setup": "php setup.php"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
+

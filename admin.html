@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - Idiomas Avanza</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon/COLORNOFONDO/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon/COLORNOFONDO/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon/COLORNOFONDO/apple-touch-icon.png">
+    <link rel="manifest" href="./assets/favicon/COLORNOFONDO/site.webmanifest">
+</head>
+<body>
+    <!-- Header -->
+    <header class="admin-header">
+        <div class="admin-nav">
+            <div class="nav-brand">
+                <h2>Idiomas Avanza Admin</h2>
+            </div>
+            <div class="nav-actions">
+                <button class="btn btn-outline" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Cerrar Sesión
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+        <nav class="sidebar-nav">
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#dashboard" class="nav-link active" onclick="showSection('dashboard')">
+                        <i class="fas fa-chart-dashboard"></i>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#users" class="nav-link" onclick="showSection('users')">
+                        <i class="fas fa-users"></i>
+                        Usuarios
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#library" class="nav-link" onclick="showSection('library')">
+                        <i class="fas fa-book"></i>
+                        Biblioteca
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#payments" class="nav-link" onclick="showSection('payments')">
+                        <i class="fas fa-credit-card"></i>
+                        Pagos
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#classes" class="nav-link" onclick="showSection('classes')">
+                        <i class="fas fa-calendar"></i>
+                        Clases
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#reports" class="nav-link" onclick="showSection('reports')">
+                        <i class="fas fa-chart-bar"></i>
+                        Reportes
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="admin-section active">
+            <div class="section-header">
+                <h1>Dashboard</h1>
+                <p>Resumen general del sistema</p>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="totalUsers">0</h3>
+                        <p>Usuarios Totales</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="totalBooks">0</h3>
+                        <p>Libros en Biblioteca</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="totalRevenue">$0</h3>
+                        <p>Ingresos Totales</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="activeUsers">0</h3>
+                        <p>Usuarios Activos</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts and Activity -->
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <h3>Distribución por Idioma</h3>
+                    <div class="chart-container">
+                        <canvas id="languageChart"></canvas>
+                    </div>
+                </div>
+                <div class="dashboard-card">
+                    <h3>Actividad Reciente</h3>
+                    <div class="activity-list" id="recentActivity">
+                        <!-- Actividad reciente se cargará aquí -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Users Section -->
+        <section id="users" class="admin-section">
+            <div class="section-header">
+                <h1>Gestión de Usuarios</h1>
+                <div class="section-actions">
+                    <button class="btn btn-primary" onclick="showAddUserModal()">
+                        <i class="fas fa-plus"></i>
+                        Agregar Usuario
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="filters-bar">
+                <div class="filter-group">
+                    <input type="text" id="userSearch" placeholder="Buscar usuarios..." onkeyup="filterUsers()">
+                </div>
+                <div class="filter-group">
+                    <select id="roleFilter" onchange="filterUsers()">
+                        <option value="">Todos los roles</option>
+                        <option value="alumno">Alumnos</option>
+                        <option value="profesor">Profesores</option>
+                        <option value="admin">Administradores</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Users Table -->
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Rol</th>
+                            <th>Nivel</th>
+                            <th>Fecha Registro</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <!-- Usuarios se cargarán aquí -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination" id="usersPagination">
+                <!-- Paginación se generará aquí -->
+            </div>
+        </section>
+
+        <!-- Library Section -->
+        <section id="library" class="admin-section">
+            <div class="section-header">
+                <h1>Gestión de Biblioteca</h1>
+                <div class="section-actions">
+                    <button class="btn btn-primary" onclick="showAddBookModal()">
+                        <i class="fas fa-plus"></i>
+                        Agregar Libro
+                    </button>
+                    <button class="btn btn-outline" onclick="showBulkUploadModal()">
+                        <i class="fas fa-upload"></i>
+                        Carga Masiva
+                    </button>
+                </div>
+            </div>
+
+            <!-- Library Stats -->
+            <div class="library-stats">
+                <div class="stat-item">
+                    <span class="stat-label">Total de Libros:</span>
+                    <span class="stat-value" id="libraryTotalBooks">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Por Idioma:</span>
+                    <span class="stat-value" id="libraryByLanguage">-</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Por Formato:</span>
+                    <span class="stat-value" id="libraryByFormat">-</span>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="filters-bar">
+                <div class="filter-group">
+                    <input type="text" id="bookSearch" placeholder="Buscar libros..." onkeyup="filterBooks()">
+                </div>
+                <div class="filter-group">
+                    <select id="languageFilter" onchange="filterBooks()">
+                        <option value="">Todos los idiomas</option>
+                        <option value="inglés">Inglés</option>
+                        <option value="francés">Francés</option>
+                        <option value="portugués">Portugués</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <select id="formatFilter" onchange="filterBooks()">
+                        <option value="">Todos los formatos</option>
+                        <option value="PDF">PDF</option>
+                        <option value="EPUB">EPUB</option>
+                        <option value="Audio">Audio</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <select id="categoryFilter" onchange="filterBooks()">
+                        <option value="">Todas las categorías</option>
+                        <option value="Gramática">Gramática</option>
+                        <option value="Vocabulario">Vocabulario</option>
+                        <option value="Conversación">Conversación</option>
+                        <option value="Lectura">Lectura</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Books Table -->
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Título</th>
+                            <th>Autor</th>
+                            <th>Idioma</th>
+                            <th>Nivel</th>
+                            <th>Formato</th>
+                            <th>Categoría</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="booksTableBody">
+                        <!-- Libros se cargarán aquí -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination" id="booksPagination">
+                <!-- Paginación se generará aquí -->
+            </div>
+        </section>
+
+        <!-- Other sections would go here -->
+        <section id="payments" class="admin-section">
+            <div class="section-header">
+                <h1>Gestión de Pagos</h1>
+            </div>
+            <p>Sección de pagos en desarrollo...</p>
+        </section>
+
+        <section id="classes" class="admin-section">
+            <div class="section-header">
+                <h1>Gestión de Clases</h1>
+            </div>
+            <p>Sección de clases en desarrollo...</p>
+        </section>
+
+        <section id="reports" class="admin-section">
+            <div class="section-header">
+                <h1>Reportes</h1>
+            </div>
+            <p>Sección de reportes en desarrollo...</p>
+        </section>
+    </main>
+
+    <!-- Modals -->
+    <!-- Add Book Modal -->
+    <div class="modal" id="addBookModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Agregar Nuevo Libro</h3>
+                <button class="modal-close" onclick="closeModal('addBookModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addBookForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="bookTitle">Título *</label>
+                            <input type="text" id="bookTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bookAuthor">Autor *</label>
+                            <input type="text" id="bookAuthor" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="bookLanguage">Idioma *</label>
+                            <select id="bookLanguage" required>
+                                <option value="">Seleccionar idioma</option>
+                                <option value="inglés">Inglés</option>
+                                <option value="francés">Francés</option>
+                                <option value="portugués">Portugués</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="bookLevel">Nivel *</label>
+                            <select id="bookLevel" required>
+                                <option value="">Seleccionar nivel</option>
+                                <option value="A1">A1</option>
+                                <option value="A2">A2</option>
+                                <option value="B1">B1</option>
+                                <option value="B2">B2</option>
+                                <option value="C1">C1</option>
+                                <option value="C2">C2</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="bookFormat">Formato *</label>
+                            <select id="bookFormat" required>
+                                <option value="">Seleccionar formato</option>
+                                <option value="PDF">PDF</option>
+                                <option value="EPUB">EPUB</option>
+                                <option value="Audio">Audio</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="bookCategory">Categoría *</label>
+                            <select id="bookCategory" required>
+                                <option value="">Seleccionar categoría</option>
+                                <option value="Gramática">Gramática</option>
+                                <option value="Vocabulario">Vocabulario</option>
+                                <option value="Conversación">Conversación</option>
+                                <option value="Lectura">Lectura</option>
+                                <option value="Escritura">Escritura</option>
+                                <option value="Pronunciación">Pronunciación</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookDescription">Descripción</label>
+                        <textarea id="bookDescription" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookFile">Archivo</label>
+                        <input type="file" id="bookFile" accept=".pdf,.epub,.mp3">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal('addBookModal')">Cancelar</button>
+                <button class="btn btn-primary" onclick="addBook()">Agregar Libro</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <p>Cargando...</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>
+
