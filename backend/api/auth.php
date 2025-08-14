@@ -194,8 +194,8 @@ function verifyToken() {
 }
 
 // Función auxiliar para obtener headers en diferentes servidores
-function getallheaders() {
-    if (!function_exists('getallheaders')) {
+if (!function_exists('getallheaders')) {
+    function getallheaders() {
         $headers = [];
         foreach ($_SERVER as $name => $value) {
             if (substr($name, 0, 5) == 'HTTP_') {
@@ -203,8 +203,6 @@ function getallheaders() {
             }
         }
         return $headers;
-    } else {
-        return getallheaders();
     }
 }
 ?>
