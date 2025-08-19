@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/PNG/banneravanza.png"  max-width="300">
+</p>
+
 # Idiomas Avanza - Escuela Digital de Idiomas
 
 Una aplicación web completa para una escuela digital especializada en inglés, francés y portugués, con grupos conversacionales, preparación para certificaciones internacionales y biblioteca digital.
@@ -573,3 +577,17 @@ php backend/scripts/create_stripe_intent.php '{"user_id":1,"package_id":1,"cours
 #   "metadata": {"user_id":"1","package_id":"1","course_id":"3"}
 # }
 ```
+
+<div align= "center">
+  <a text= "font-segoeui align-center strong">🔥 Desarrollado por Sebastian Vernis | Soluciones Digitales</a>
+</div>
+<div align= "center">
+  <a href="https://sebastianvernis.com">Sebastian Vernis 🧑🏻‍💻 </a>
+</div>
+<div align= "center">
+  <a href="https://chispart.mx">Chispart 🎨 </a>
+</div>
+    
+<p align="center">
+  <img src="assets/PNG/LOGO2.png">
+</p>
