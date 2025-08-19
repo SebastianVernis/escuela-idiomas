@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Biblioteca | Idiomas Avanza</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon/COLORNOFONDO/favicon-32x32.png" />
+  <style>
+    .library-toolbar { display:flex; gap:1rem; justify-content:center; margin-bottom:2rem; }
+    .library-toolbar input { padding:0.75rem 1rem; border:1px solid var(--border-color); border-radius:8px; min-width:260px; }
+    .library-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:1.5rem; }
+    .library-card { background: var(--background-white); padding:1.25rem; border-radius: var(--border-radius); box-shadow: var(--shadow-md); }
+    .library-card h4 { margin:0.25rem 0 0.5rem; color: var(--text-primary); }
+    .library-card p { color: var(--text-secondary); font-size: 0.95rem; }
+    .badge { display:inline-block; background: var(--background-light); padding: 0.25rem 0.6rem; border-radius: 999px; font-size: 0.8rem; margin-right:0.35rem; }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="nav-logo">
+          <h2>Idiomas Avanza</h2>
+        </div>
+        <ul class="nav-menu">
+          <li class="nav-item"><a href="index.html" class="nav-link">Inicio</a></li>
+          <li class="nav-item"><a href="cursos.html" class="nav-link">Cursos</a></li>
+          <li class="nav-item"><a href="certificaciones.html" class="nav-link">Certificaciones</a></li>
+          <li class="nav-item"><a href="biblioteca.html" class="nav-link">Biblioteca</a></li>
+          <li class="nav-item"><a href="index.html#contacto" class="nav-link">Contacto</a></li>
+          <li class="nav-item"><a href="portal.html" class="nav-link btn-login">Portal de Alumnos</a></li>
+        </ul>
+        <div class="hamburger">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Encabezado -->
+  <section class="hero" style="min-height: 40vh; padding: 140px 0 60px;">
+    <div class="hero-container" style="grid-template-columns: 1fr;">
+      <div class="hero-content" style="text-align:center;">
+        <h1 class="hero-title">Biblioteca Digital</h1>
+        <p class="hero-subtitle">Más de 1000 recursos: libros, audios y guías por nivel</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="store" id="library">
+    <div class="container">
+      <div class="section-header">
+        <h2>Explora por categorías</h2>
+        <p>Acceso según tu paquete y nivel. Ingresa al portal para ver tus asignaciones.</p>
+      </div>
+
+      <div class="library-toolbar">
+        <input type="text" placeholder="Buscar títulos o autores (demo)" disabled />
+        <a class="btn btn-primary" href="portal.html"><i class="fas fa-sign-in-alt"></i> Ingresar al Portal</a>
+      </div>
+
+      <div class="library-grid">
+        <div class="library-card">
+          <i class="fas fa-book" style="font-size:1.6rem; color: var(--primary-color);"></i>
+          <h4>Gramática esencial (A1–B1)</h4>
+          <p>Selección de libros base con ejercicios y claves de respuesta.</p>
+          <div>
+            <span class="badge">PDF</span>
+            <span class="badge">Ejercicios</span>
+          </div>
+        </div>
+
+        <div class="library-card">
+          <i class="fas fa-headphones" style="font-size:1.6rem; color: var(--primary-color);"></i>
+          <h4>Listening & Pronunciación</h4>
+          <p>Audio-libros y prácticas de pronunciación con transcripciones.</p>
+          <div>
+            <span class="badge">Audio</span>
+            <span class="badge">Transcripción</span>
+          </div>
+        </div>
+
+        <div class="library-card">
+          <i class="fas fa-feather-alt" style="font-size:1.6rem; color: var(--primary-color);"></i>
+          <h4>Lecturas graduadas</h4>
+          <p>Novelas y cuentos por nivel con glosarios y quizzes.</p>
+          <div>
+            <span class="badge">EPUB</span>
+            <span class="badge">Quiz</span>
+          </div>
+        </div>
+
+        <div class="library-card">
+          <i class="fas fa-tasks" style="font-size:1.6rem; color: var(--primary-color);"></i>
+          <h4>Preparación de exámenes</h4>
+          <p>Guías oficiales y bancos de reactivos para TOEFL, CAPLE y DAFL.</p>
+          <div>
+            <span class="badge">Banco</span>
+            <span class="badge">Simulacros</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:2rem; text-align:center;">
+        <a class="btn btn-outline" href="index.html#contacto">Solicitar recomendación</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Idiomas Avanza</h3>
+          <p>Recursos curados por docentes para acelerar tu progreso.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Enlaces</h4>
+          <ul>
+            <li><a href="cursos.html">Cursos</a></li>
+            <li><a href="certificaciones.html">Certificaciones</a></li>
+            <li><a href="biblioteca.html">Biblioteca</a></li>
+            <li><a href="index.html#contacto">Contacto</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Síguenos</h4>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Idiomas Avanza. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navMenu.classList.toggle('active');
+    });
+    document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      navMenu.classList.remove('active');
+    }));
+  </script>
+</body>
+</html>
+

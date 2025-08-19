@@ -164,13 +164,17 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Course card interactions
+// Course card interactions (solo demo para botones sin enlace)
 document.querySelectorAll('.course-card .btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-        const courseCard = e.target.closest('.course-card');
-        const courseName = courseCard.querySelector('h3').textContent;
-        alert(`Más información sobre: ${courseName}\n\nEsta funcionalidad se implementará en la siguiente fase del desarrollo.`);
-    });
+    const isAnchor = btn.tagName === 'A';
+    const hasHref = isAnchor && btn.getAttribute('href');
+    if (!hasHref) {
+        btn.addEventListener('click', (e) => {
+            const courseCard = e.target.closest('.course-card');
+            const courseName = courseCard?.querySelector('h3')?.textContent || 'Curso';
+            alert(`Más información sobre: ${courseName}\n\nEsta funcionalidad se implementará en la siguiente fase del desarrollo.`);
+        });
+    }
 });
 
 // Utility functions
@@ -197,4 +201,3 @@ window.openRegisterModal = openRegisterModal;
 window.closeRegisterModal = closeRegisterModal;
 window.scrollToSection = scrollToSection;
 window.showNotification = showNotification;
-
