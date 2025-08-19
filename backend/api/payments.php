@@ -175,13 +175,20 @@ function createStripePaymentIntent() {
             \Stripe\Stripe::setApiKey($stripe_secret_key);
             
             // Crear PaymentIntent
+            $metadata = [
+                'user_id' => $user_id,
+                'package_id' => $data->package_id
+            ];
+            if (!empty($data->metadata) && is_object($data->metadata)) {
+                // Propagar metadata desde el frontend (e.g., cursoId)
+                foreach ($data->metadata as $k => $v) {
+                    $metadata[$k] = $v;
+                }
+            }
             $payment_intent = \Stripe\PaymentIntent::create([
                 'amount' => $data->amount * 100, // Stripe usa centavos
                 'currency' => 'mxn',
-                'metadata' => [
-                    'user_id' => $user_id,
-                    'package_id' => $data->package_id
-                ],
+                'metadata' => $metadata,
                 'automatic_payment_methods' => [
                     'enabled' => true,
                 ],
@@ -242,7 +249,8 @@ function createClipPayment() {
                 "webhook_url" => "https://tu-dominio.com/api/payments/webhook-clip",
                 "metadata" => array(
                     "user_id" => $user_id,
-                    "package_id" => $data->package_id
+                    "package_id" => $data->package_id,
+                    "course_id" => isset($data->course_id) ? $data->course_id : null
                 )
             );
             
@@ -444,4 +452,3 @@ function assignPackageToUser($package_id, $user_id) {
     }
 }
 ?>
-

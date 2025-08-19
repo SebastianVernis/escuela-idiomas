@@ -1,0 +1,283 @@
+// Prisma schema for Idiomas Avanza (MySQL)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// Enums
+enum RolUsuario {
+  ALUMNO
+  PROFESOR
+  ADMIN
+}
+
+enum Idioma {
+  INGLES
+  FRANCES
+  PORTUGUES
+}
+
+enum Nivel {
+  A1
+  A2
+  B1
+  B2
+  C1
+  C2
+}
+
+enum TipoClase {
+  GRUPO
+  INDIVIDUAL
+  CONVERSACIONAL
+}
+
+enum EstadoPago {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum ProveedorPago {
+  STRIPE
+  CLIP
+}
+
+enum TipoPaquete {
+  BASICO
+  PREMIUM
+  CERTIFICACION
+}
+
+enum FormatoLibro {
+  PDF
+  EPUB
+  AUDIO
+}
+
+enum EstadoInscripcion {
+  ACTIVA
+  FINALIZADA
+  CANCELADA
+}
+
+enum EstadoAsistencia {
+  PRESENTE
+  AUSENTE
+  JUSTIFICADO
+}
+
+enum TipoCertificacion {
+  TOEFL
+  CAPLE
+  DAFL
+}
+
+// Models
+model Usuario {
+  id           Int            @id @default(autoincrement())
+  username     String         @unique
+  email        String         @unique
+  nombre       String?
+  role         RolUsuario     @default(ALUMNO)
+  passwordHash String?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  pagos        Pago[]
+  asistencias  Asistencia[]
+  inscripciones Inscripcion[]
+  libros       UsuarioLibro[]
+  profesor     Profesor?
+
+  @@index([createdAt])
+}
+
+model Libro {
+  id         Int            @id @default(autoincrement())
+  titulo     String         @unique
+  autor      String?
+  formato    FormatoLibro
+  nivel      Nivel?
+  url        String
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+
+  usuarios   UsuarioLibro[]
+  paquetes   Paquete[]
+  categorias Categoria[]
+
+  @@index([formato])
+  @@index([nivel])
+}
+
+model Curso {
+  id          Int         @id @default(autoincrement())
+  nombre      String
+  idioma      Idioma
+  nivelInicio Nivel?
+  nivelFin    Nivel?
+  descripcion String?
+  precioMx    Int?        // en centavos
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  clases      Clase[]
+  inscripciones Inscripcion[]
+  horarios    Horario[]
+  paquetes    Paquete[]
+
+  @@index([idioma])
+  @@index([nivelInicio])
+  @@index([nivelFin])
+}
+
+model Clase {
+  id         Int         @id @default(autoincrement())
+  curso      Curso       @relation(fields: [cursoId], references: [id])
+  cursoId    Int
+  profesor   Profesor?   @relation(fields: [profesorId], references: [id])
+  profesorId Int?
+  tipo       TipoClase
+  empiezaEn  DateTime
+  duracionMin Int
+  createdAt  DateTime    @default(now())
+
+  asistencias Asistencia[]
+
+  @@index([cursoId])
+  @@index([empiezaEn])
+}
+
+model Pago {
+  id          Int            @id @default(autoincrement())
+  usuario     Usuario        @relation(fields: [usuarioId], references: [id])
+  usuarioId   Int
+  amountCents Int
+  currency    String         @default("MXN")
+  proveedor   ProveedorPago
+  estado      EstadoPago     @default(PENDING)
+  externalId  String?        @unique
+  createdAt   DateTime       @default(now())
+
+  @@index([usuarioId])
+  @@index([createdAt])
+  @@index([proveedor, estado])
+}
+
+model Asistencia {
+  id         Int             @id @default(autoincrement())
+  clase      Clase           @relation(fields: [claseId], references: [id])
+  claseId    Int
+  usuario    Usuario         @relation(fields: [usuarioId], references: [id])
+  usuarioId  Int
+  estado     EstadoAsistencia @default(PRESENTE)
+  timestamp  DateTime        @default(now())
+
+  @@unique([claseId, usuarioId])
+}
+
+model ConversacionSala {
+  id        Int      @id @default(autoincrement())
+  idioma    Idioma
+  nivel     Nivel
+  horario   String?
+  capacidad Int?
+  activa    Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  @@index([idioma])
+  @@index([nivel])
+  @@index([activa])
+}
+
+model UsuarioLibro {
+  id        Int      @id @default(autoincrement())
+  usuario   Usuario  @relation(fields: [usuarioId], references: [id])
+  usuarioId Int
+  libro     Libro    @relation(fields: [libroId], references: [id])
+  libroId   Int
+  assignedAt DateTime @default(now())
+
+  @@unique([usuarioId, libroId])
+}
+
+model Inscripcion {
+  id         Int               @id @default(autoincrement())
+  usuario    Usuario           @relation(fields: [usuarioId], references: [id])
+  usuarioId  Int
+  curso      Curso             @relation(fields: [cursoId], references: [id])
+  cursoId    Int
+  estado     EstadoInscripcion @default(ACTIVA)
+  activa     Boolean           @default(true) // redundante para constraint única
+  createdAt  DateTime          @default(now())
+
+  paquete    Paquete?          @relation(fields: [paqueteId], references: [id])
+  paqueteId  Int?
+
+  @@index([usuarioId])
+  @@index([cursoId])
+  @@index([paqueteId])
+  @@index([estado])
+  @@unique([usuarioId, cursoId, activa])
+}
+
+model Profesor {
+  id        Int      @id @default(autoincrement())
+  usuario   Usuario? @relation(fields: [usuarioId], references: [id])
+  usuarioId Int?
+  bio       String?
+  idiomas   String?  // CSV: INGLES,FRANCES
+
+  clases    Clase[]
+}
+
+model Horario {
+  id         Int     @id @default(autoincrement())
+  curso      Curso   @relation(fields: [cursoId], references: [id])
+  cursoId    Int
+  diaSemana  Int     // 0..6
+  hora       String  // 24h HH:MM
+  timezone   String? // e.g., America/Mexico_City
+
+  @@index([cursoId])
+  @@index([diaSemana])
+}
+
+model Certificacion {
+  id        Int               @id @default(autoincrement())
+  tipo      TipoCertificacion
+  nivel     Nivel?
+  objetivo  String?
+  createdAt DateTime @default(now())
+
+  @@index([tipo])
+  @@index([nivel])
+}
+
+model Categoria {
+  id      Int     @id @default(autoincrement())
+  nombre  String  @unique
+  libros  Libro[]
+}
+
+model Paquete {
+  id              Int          @id @default(autoincrement())
+  tipo            TipoPaquete  @unique
+  nombre          String
+  descripcion     String?
+  precioMx        Int          // en centavos
+  incluyeBiblioteca Boolean    @default(true)
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  inscripciones   Inscripcion[]
+  cursos          Curso[]
+  libros          Libro[]
+}
