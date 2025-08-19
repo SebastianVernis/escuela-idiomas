@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "codex-cli-architect-mcp": "^0.2.1",
     "globals": "^16.3.0"
   }
 }

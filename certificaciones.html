@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Certificaciones | Idiomas Avanza</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon/COLORNOFONDO/favicon-32x32.png" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="nav-logo">
+          <h2>Idiomas Avanza</h2>
+        </div>
+        <ul class="nav-menu">
+          <li class="nav-item"><a href="index.html" class="nav-link">Inicio</a></li>
+          <li class="nav-item"><a href="cursos.html" class="nav-link">Cursos</a></li>
+          <li class="nav-item"><a href="certificaciones.html" class="nav-link">Certificaciones</a></li>
+          <li class="nav-item"><a href="biblioteca.html" class="nav-link">Biblioteca</a></li>
+          <li class="nav-item"><a href="index.html#contacto" class="nav-link">Contacto</a></li>
+          <li class="nav-item"><a href="portal.html" class="nav-link btn-login">Portal de Alumnos</a></li>
+        </ul>
+        <div class="hamburger">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Cabecera -->
+  <section class="hero" style="min-height: 40vh; padding: 140px 0 60px;">
+    <div class="hero-container" style="grid-template-columns: 1fr;">
+      <div class="hero-content" style="text-align:center;">
+        <h1 class="hero-title">Certificaciones Internacionales</h1>
+        <p class="hero-subtitle">Entrenamiento por secciones, simulacros cronometrados y feedback experto</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="certifications" id="lista-certificaciones">
+    <div class="container">
+      <div class="section-header">
+        <h2>Exámenes que preparamos</h2>
+        <p>Selecciona el examen y te guiamos hasta tu puntaje meta.</p>
+      </div>
+
+      <div class="cert-grid">
+        <div class="cert-card">
+          <h3><i class="fas fa-certificate"></i> TOEFL iBT</h3>
+          <p>Inglés académico para ingreso a universidades y becas internacionales.</p>
+          <div class="cert-features">
+            <span>Meta típica: 80–100+</span>
+            <span>Duración: 6–12 semanas</span>
+            <span>Simulacros iBT</span>
+          </div>
+          <div style="margin-top: 1rem; color: var(--text-secondary);">
+            Estrategias de Reading/Listening y práctica intensiva de Speaking & Writing con rúbrica oficial ETS.
+          </div>
+        </div>
+
+        <div class="cert-card">
+          <h3><i class="fas fa-flag"></i> CAPLE</h3>
+          <p>Portugués como lengua extranjera, niveles A1–C2 con reconocimiento internacional.</p>
+          <div class="cert-features">
+            <span>Diagnóstico por nivel</span>
+            <span>Modelos de prueba</span>
+            <span>Producción escrita</span>
+          </div>
+          <div style="margin-top: 1rem; color: var(--text-secondary);">
+            Entrenamiento integral por tareas, comprensión auditiva y expresión oral con correcciones detalladas.
+          </div>
+        </div>
+
+        <div class="cert-card">
+          <h3><i class="fas fa-language"></i> DAFL</h3>
+          <p>Francés como lengua extranjera con criterios alineados al MCER.</p>
+          <div class="cert-features">
+            <span>Secciones: CO, CE, EO, EE</span>
+            <span>Feedback por rúbrica</span>
+            <span>Validez permanente</span>
+          </div>
+          <div style="margin-top: 1rem; color: var(--text-secondary);">
+            Simulaciones de examen, mejora de pronunciación y gramática aplicada al desempeño.
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 2.5rem; text-align:center;">
+        <a class="btn btn-primary" href="payment.html">Comenzar preparación</a>
+        <a class="btn btn-outline" href="cursos.html" style="margin-left: 0.5rem;">Ver cursos</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Idiomas Avanza</h3>
+          <p>Preparación enfocada en resultados y puntajes verificables.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Enlaces</h4>
+          <ul>
+            <li><a href="cursos.html">Cursos</a></li>
+            <li><a href="certificaciones.html">Certificaciones</a></li>
+            <li><a href="biblioteca.html">Biblioteca</a></li>
+            <li><a href="index.html#contacto">Contacto</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Síguenos</h4>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Idiomas Avanza. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navMenu.classList.toggle('active');
+    });
+    document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      navMenu.classList.remove('active');
+    }));
+  </script>
+</body>
+</html>
