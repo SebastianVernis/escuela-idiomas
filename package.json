@@ -1,6 +1,21 @@
 {
+  "name": "idiomas-avanza",
+  "private": true,
+  "scripts": {
+    "prisma:format": "prisma format",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev --name init",
+    "prisma:reset": "prisma migrate reset --force",
+    "prisma:studio": "prisma studio",
+    "prisma:seed": "node prisma/seed.js",
+    "webhooks:start": "node webhooks/server.js"
+  },
   "dependencies": {
+    "@prisma/client": "^5.17.0",
     "codex-cli-architect-mcp": "^0.2.1",
     "globals": "^16.3.0"
+  },
+  "devDependencies": {
+    "prisma": "^5.17.0"
   }
 }

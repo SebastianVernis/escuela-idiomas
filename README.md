@@ -378,3 +378,198 @@ Copyright © 2025 Idiomas Avanza. Todos los derechos reservados.
 
 # Avanza
 # Avanza
+
+## ✅ Checklist de Pendientes
+
+- [ ] Contenido: Completar copys y detalles en `cursos.html`, `certificaciones.html` y `biblioteca.html` (niveles, horarios, FAQs, políticas).
+  - Responsable: Equipo Contenido/UX  
+  - Fecha estimada: 2025-08-26
+- [ ] Navegación: Marcar enlace activo en header de páginas internas (resaltado visual consistente).
+  - Responsable: Frontend  
+  - Fecha estimada: 2025-08-22
+- [ ] Landing: Unificar experiencia de acceso (decidir entre modal de login o enlace directo al `portal.html` en todos los lugares; actualmente el header va a `portal.html` y el botón “Acceso Estudiantes” usa modal).
+  - Responsable: Frontend + Producto  
+  - Fecha estimada: 2025-08-21
+- [ ] Pagos: Conectar botones de inscripción/preparación a flujos reales en `payment.html` (Stripe/Clip) y confirmar redirecciones post-pago.
+  - Responsable: Backend/Payments  
+  - Fecha estimada: 2025-08-28
+- [ ] Biblioteca: Integrar listado dinámico desde backend (`/backend/api/library.php`) con filtros y paginación; reemplazar tarjetas de ejemplo.
+  - Responsable: Backend + Frontend  
+  - Fecha estimada: 2025-08-30
+- [ ] SEO: Agregar metadatos específicos en nuevas páginas (title/description únicos, Open Graph, canonical) y actualizar `sitemap.xml`/`robots.txt`.
+  - Responsable: SEO/Marketing  
+  - Fecha estimada: 2025-08-24
+- [ ] Accesibilidad: Pasar auditoría (contrastes, roles ARIA, focus visible, etiquetas de formularios) y resolver hallazgos.
+  - Responsable: Frontend  
+  - Fecha estimada: 2025-08-25
+- [ ] Performance: Medir con Lighthouse (imágenes, CSS/JS crítico, lazy loading) y aplicar optimizaciones.
+  - Responsable: Frontend  
+  - Fecha estimada: 2025-08-25
+- [ ] QA: Pruebas en navegadores y dispositivos (Chrome, Safari, Firefox; iOS/Android) y revisar navegación de enlaces.
+  - Responsable: QA  
+  - Fecha estimada: 2025-08-29
+- [ ] Seguridad: Implementar autenticación real con JWT en `portal.html` y proteger rutas/recursos.
+  - Responsable: Backend  
+  - Fecha estimada: 2025-09-02
+
+## 🗂️ Checklist Administrativo
+
+- [ ] Clip: Crear cuenta, completar verificación, firmar contrato, habilitar MXN y métodos; generar API Key y configurar webhook en backend (`/backend/api/payments/webhook-clip`).
+  - Responsable: Backend/Payments  
+  - Fecha estimada: 2025-08-21
+- [ ] Stripe: Crear/activar cuenta en producción, completar KYC, firmar acuerdo, habilitar payouts y MXN, 3DS; configurar claves y webhook (`/backend/api/payments/webhook-stripe`).
+  - Responsable: Backend/Payments  
+  - Fecha estimada: 2025-08-21
+- [ ] Facturación: Definir/ publicar políticas de reembolsos y cancelaciones; alta fiscal (RFC) y emisión de CFDI cuando aplique.
+  - Responsable: Administración/Legal  
+  - Fecha estimada: 2025-08-28
+- [ ] Legal: Revisar y enlazar Políticas de Privacidad y Términos actualizados en el sitio.
+  - Responsable: Legal  
+  - Fecha estimada: 2025-08-23
+- [ ] Dominio y SSL: Verificar DNS, SSL activo y renovación automática. Configurar SPF/DKIM/DMARC para emails transaccionales.
+  - Responsable: Infra/DevOps  
+  - Fecha estimada: 2025-08-22
+- [ ] Libros: Cargar catálogo a la BD (metadatos normalizados), subir archivos a almacenamiento (S3/Backblaze) y guardar URLs seguras.
+  - Responsable: Contenido + Backend  
+  - Fecha estimada: 2025-08-30
+- [ ] Derechos de autor: Validar licencias y permisos de distribución de materiales de la biblioteca.
+  - Responsable: Legal/Contenido  
+  - Fecha estimada: 2025-08-27
+- [ ] Bancario: Registrar cuenta para depósitos/payouts en Stripe/Clip y validar depósitos de prueba.
+  - Responsable: Administración  
+  - Fecha estimada: 2025-08-24
+- [ ] Seguridad de datos: Política de retención y borrado, respaldos, y control de accesos (principio de mínimo privilegio).
+  - Responsable: Seguridad/Backend  
+  - Fecha estimada: 2025-08-29
+
+---
+
+## 🧩 Integración con Prisma (MySQL)
+
+Esta sección permite gestionar la base de datos de forma dinámica y visual usando Prisma Studio.
+
+1) Instalar dependencias (Node 18+):
+```bash
+npm install --save-dev prisma
+npm install @prisma/client
+npx prisma init --datasource-provider mysql # (ya incluido en el repo; opcional)
+```
+
+2) Configurar variables de entorno:
+```env
+# .env
+DATABASE_URL="mysql://USER:PASSWORD@HOST:PORT/idiomasavanza_db?schema=public"
+```
+
+3) Migraciones y cliente:
+```bash
+npx prisma migrate dev --name init
+npx prisma generate
+```
+
+4) Prisma Studio (UI visual de datos):
+```bash
+npx prisma studio
+```
+
+5) Seed inicial (opcional):
+```bash
+npm run prisma:seed
+```
+
+6) Reset de base (migración desde 0):
+```bash
+npm run prisma:reset
+npm run prisma:migrate
+npm run prisma:seed
+```
+
+7) Notas:
+- Si ya existe una BD con tablas, usar `prisma db pull` para introspección y alinear el `schema.prisma`.
+- Revisar el archivo `prisma/schema.prisma` incluido para los modelos base (usuarios, libros, cursos, pagos, etc.).
+  - Incluye modelo de `Paquete` (Básico, Premium, Certificación) y relación opcional en `Inscripcion`.
+  - Relaciones M:N: `Paquete`–`Curso` (cobertura por plan) y `Paquete`–`Libro` (catálogos por plan).
+  - Categorías normalizadas: modelo `Categoria` relacionado M:N con `Libro`.
+  - Índices añadidos en campos de consulta frecuente (fechas, claves foráneas, estados, idioma/nivel, etc.) y `unique` en `Libro.titulo`.
+  - Constraint para inscripciones activas: campo redundante `Inscripcion.activa` con `@@unique([usuarioId, cursoId, activa])` para evitar múltiples inscripciones activas del mismo usuario al mismo curso.
+    - Nota: actualizar `activa=false` cuando `estado` pase a `FINALIZADA` o `CANCELADA`.
+
+8) Helper para inscripciones (opcional):
+```js
+// prisma/inscripciones.js
+const { crearInscripcionSegura, cerrarInscripcionesActivas } = require('./prisma/inscripciones');
+
+// Crear nueva inscripción asegurando unicidad de activa
+await crearInscripcionSegura({
+  usuarioId: 1,
+  cursoId: 1,
+  paqueteId: 1,
+  cerrarPrevias: false, // o true para cerrar automáticamente las activas previas
+});
+
+// Cerrar inscripciones activas (cuando finaliza o se cancela)
+await cerrarInscripcionesActivas(1, 1);
+```
+
+9) Helpers de pagos y biblioteca (opcionales):
+```js
+// prisma/pagos.js
+const { crearPago, actualizarEstadoPago, marcarPagoExitosoPorExternalId } = require('./prisma/pagos');
+
+// Crear un pago pendiente (Stripe)
+await crearPago({ usuarioId: 1, amountCents: 120000, proveedor: 'STRIPE', externalId: 'pi_123' });
+
+// Actualizar estado por externalId (webhook)
+await marcarPagoExitosoPorExternalId('pi_123');
+
+// prisma/biblioteca.js
+const { asignarLibrosDePaquete, asignarLibrosDeCurso } = require('./prisma/biblioteca');
+
+// Asignar catálogo del paquete al usuario
+await asignarLibrosDePaquete(1, 1); // usuarioId, paqueteId
+
+// Asignar libros de todos los paquetes que cubren un curso
+await asignarLibrosDeCurso(1, 1); // usuarioId, cursoId
+```
+
+10) Flujo post-pago (opcional):
+```js
+// prisma/postPago.js
+const { procesarPagoExitoso } = require('./prisma/postPago');
+
+// Al confirmar un pago PAID (p.ej., en webhook):
+await procesarPagoExitoso({
+  usuarioId: 1,
+  cursoId: 1,
+  paqueteId: 1,
+  pagoExternalId: 'pi_123', // o pagoId
+  cerrarPrevias: false,
+});
+```
+
+11) Webhook server (Node opcional, sin dependencias):
+```bash
+npm run webhooks:start # expone http://localhost:8787
+```
+Endpoints:
+- POST `/webhooks/stripe` (payload mínimo tipo `payment_intent.succeeded` con metadata `{usuarioId, cursoId, paqueteId}`)
+- POST `/webhooks/clip` (payload con `data.status=COMPLETED` y metadata `{usuarioId, cursoId, paqueteId}`)
+
+Notas importantes:
+- En producción valida la firma del webhook (Stripe-Signature / Clip headers). Este servidor de ejemplo no incluye validación de firmas.
+- Asegura que al crear el Payment Intent (Stripe) o el Checkout (Clip) incluyas `metadata` con `usuarioId`, `cursoId` y `paqueteId`.
+- Alternativa PHP: puedes mantener `backend/api/payments.php` y consumir estos helpers desde un microservicio Node para la parte de post-proceso con Prisma.
+
+12) Script PHP de ejemplo: Crear PaymentIntent con metadata
+```bash
+# Requiere: composer install en backend/ y configurar STRIPE_SECRET_KEY en el entorno
+php backend/scripts/create_stripe_intent.php '{"user_id":1,"package_id":1,"course_id":3,"amount_mxn":1200}'
+
+# Respuesta:
+# {
+#   "ok": true,
+#   "payment_intent_id": "pi_...",
+#   "client_secret": "...",
+#   "metadata": {"user_id":"1","package_id":"1","course_id":"3"}
+# }
+```

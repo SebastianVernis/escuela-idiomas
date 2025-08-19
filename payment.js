@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('Payment page loaded');
     loadAvailablePackages();
     initializeStripe();
+    handleUrlParams();
 });
 
 // Cargar paquetes disponibles
@@ -133,6 +134,7 @@ function proceedToPayment() {
         setupStripeForm();
     } else if (selectedPaymentMethod === 'clip') {
         document.getElementById('clipPayment').style.display = 'block';
+        // Opcional: podríamos iniciar automáticamente processClipPayment()
     }
 }
 
@@ -192,6 +194,11 @@ async function handleStripePayment(event) {
     
     try {
         // Crear PaymentIntent en el servidor
+        // Metadatos para enlazar en el webhook (usuario/curso/paquete)
+        const usuarioId = getLoggedUserId();
+        const cursoId = getCourseIdFromUrl();
+        const paqueteId = selectedPackage?.id;
+
         const response = await fetch('/backend/api/payments/create-stripe-intent', {
             method: 'POST',
             headers: {
@@ -199,8 +206,14 @@ async function handleStripePayment(event) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                package_id: selectedPackage.id,
-                amount: selectedPackage.precio
+                package_id: paqueteId,
+                amount: selectedPackage.precio,
+                // Importante: el backend debe propagar estos metadatos al PaymentIntent de Stripe
+                metadata: {
+                    usuarioId: String(usuarioId || ''),
+                    cursoId: String(cursoId || ''),
+                    paqueteId: String(paqueteId || '')
+                }
             })
         });
         
@@ -236,7 +249,47 @@ async function handleStripePayment(event) {
     }
 }
 
-// Procesar pago con Clip
+// Procesar pago con Clip: crea checkout y redirige
+async function processClipPayment() {
+    if (!selectedPackage) {
+        showError('Selecciona un paquete antes de continuar');
+        return;
+    }
+    showLoading(true);
+    try {
+        const usuarioId = getLoggedUserId();
+        const cursoId = getCourseIdFromUrl();
+        const paqueteId = selectedPackage.id;
+        const response = await fetch('/backend/api/payments/create-clip-payment', {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + getAuthToken(),
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                package_id: paqueteId,
+                amount: selectedPackage.precio,
+                course_id: cursoId,
+                metadata: {
+                    usuarioId: String(usuarioId || ''),
+                    cursoId: String(cursoId || ''),
+                    paqueteId: String(paqueteId || '')
+                }
+            })
+        });
+        const data = await response.json();
+        if (response.ok && data.payment_url) {
+            window.location.href = data.payment_url;
+        } else {
+            showError(data.message || 'Error creando el pago con Clip');
+        }
+    } catch (err) {
+        console.error(err);
+        showError('Error de conexión con Clip');
+    } finally {
+        showLoading(false);
+    }
+}
 
 
 // Reintentar pago
@@ -292,6 +345,23 @@ function getAuthToken() {
     return localStorage.getItem('auth_token') || 'demo_token';
 }
 
+// Obtener usuario logueado (para metadata del PaymentIntent)
+function getLoggedUserId() {
+    try {
+        const user = JSON.parse(localStorage.getItem('user_data'));
+        return user?.id || null;
+    } catch (_) {
+        return null;
+    }
+}
+
+// Obtener curso desde parámetros de URL (ej. ?cursoId=1)
+function getCourseIdFromUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const fromCurso = urlParams.get('cursoId') || urlParams.get('course_id');
+    return fromCurso ? Number(fromCurso) : null;
+}
+
 // Manejar parámetros de URL para confirmación de pago
 function handleUrlParams() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -306,9 +376,7 @@ function handleUrlParams() {
 }
 
 // Verificar parámetros de URL al cargar
-document.addEventListener('DOMContentLoaded', () => {
-    handleUrlParams();
-});
+// Nota: handleUrlParams() ya se invoca al cargar la página arriba
 
 // Función para simular datos de paquetes (para demo)
 function loadDemoPackages() {
@@ -353,4 +421,3 @@ setTimeout(() => {
         loadDemoPackages();
     }
 }, 2000);
-
