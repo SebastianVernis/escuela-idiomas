@@ -47,13 +47,13 @@ body {
 }
 
 .navbar {
-    padding: 1rem 0;
+    padding: 0.25rem 0;
 }
 
 .nav-container {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 0 0 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -63,6 +63,22 @@ body {
     color: var(--primary-color);
     font-weight: 700;
     font-size: 1.5rem;
+}
+
+.logo-header {
+    height: 120px;
+    width: auto;
+    margin-left: 0;
+}
+
+.nav-menu {
+    margin-right: 20px;
+}
+
+.logo-footer {
+    height: 60px;
+    width: auto;
+    margin-bottom: 1rem;
 }
 
 .nav-menu {
@@ -112,7 +128,7 @@ body {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.8) 0%, rgba(30, 64, 175, 0.8) 100%), url('assets/PNG/FondoHero.png') center/cover no-repeat;
     color: white;
     padding: 120px 0 80px;
     min-height: 100vh;
@@ -121,13 +137,14 @@ body {
 }
 
 .hero-container {
-    max-width: 1200px;
+    max-width: 800px;
     margin: 0 auto;
     padding: 0 20px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
+    text-align: center;
+}
+
+.hero-content {
+    text-align: center;
 }
 
 .hero-title {
@@ -147,12 +164,22 @@ body {
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .hero-image {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.hero-bg-image {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: 20px;
+    opacity: 0.9;
+    box-shadow: var(--shadow-lg);
 }
 
 .hero-card {
@@ -594,6 +621,37 @@ section {
 }
 
 /* Responsive Design */
+@media (max-width: 1024px) {
+    .nav-container {
+        max-width: 100%;
+        padding: 0 20px 0 0;
+    }
+    
+    .logo-header {
+        height: 100px;
+    }
+    
+    .hero-container {
+        max-width: 90%;
+        padding: 0 15px;
+    }
+    
+    .hero-title {
+        font-size: 3rem;
+    }
+    
+    .container {
+        padding: 0 15px;
+    }
+    
+    .courses-grid,
+    .cert-grid,
+    .store-features {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+    }
+}
+
 @media (max-width: 768px) {
     .nav-menu {
         position: fixed;
@@ -628,14 +686,46 @@ section {
         transform: translateY(-8px) rotate(-45deg);
     }
 
+    .logo-header {
+        height: 80px;
+    }
+    
+    .nav-container {
+        padding: 0 15px 0 0;
+    }
+
+    .hero {
+        padding: 100px 0 60px;
+        min-height: 80vh;
+    }
+    
     .hero-container {
-        grid-template-columns: 1fr;
+        max-width: 95%;
+        padding: 0 10px;
         text-align: center;
-        gap: 2rem;
     }
 
     .hero-title {
         font-size: 2.5rem;
+        line-height: 1.1;
+        margin-bottom: 1rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+    }
+    
+    .hero-buttons .btn {
+        width: 100%;
+        max-width: 300px;
+        padding: 0.75rem 2rem;
     }
 
     .contact-content {
@@ -643,33 +733,107 @@ section {
         gap: 2rem;
     }
 
-    .hero-buttons {
-        justify-content: center;
-    }
-
     .courses-grid,
     .cert-grid,
     .store-features {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .section-header {
+        margin-bottom: 2rem;
+    }
+    
+    .section-header h2 {
+        font-size: 2.5rem;
+    }
+    
+    .section-header p {
+        font-size: 1.1rem;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 2rem;
+    }
+    
+    .logo-footer {
+        height: 50px;
+    }
+    
+    .social-links {
+        justify-content: center;
     }
 }
 
 @media (max-width: 480px) {
+    .logo-header {
+        height: 60px;
+    }
+    
+    .nav-container {
+        padding: 0 10px 0 0;
+    }
+
+    .hero {
+        padding: 80px 0 40px;
+        min-height: 70vh;
+    }
+    
+    .hero-container {
+        padding: 0 15px;
+    }
+
     .hero-title {
         font-size: 2rem;
+        line-height: 1.1;
     }
 
     .hero-subtitle {
         font-size: 1rem;
+        margin-bottom: 1.25rem;
+    }
+    
+    .hero-buttons .btn {
+        font-size: 0.9rem;
+        padding: 0.6rem 1.5rem;
     }
 
     .section-header h2 {
         font-size: 2rem;
     }
+    
+    .section-header p {
+        font-size: 1rem;
+    }
+    
+    .container {
+        padding: 0 10px;
+    }
 
     .modal-content {
         margin: 10% auto;
         padding: 1.5rem;
+        width: 95%;
+    }
+    
+    .course-card,
+    .cert-card {
+        padding: 1.5rem;
+    }
+    
+    .course-card h3,
+    .cert-card h3 {
+        font-size: 1.25rem;
+    }
+    
+    .logo-footer {
+        height: 40px;
+    }
+    
+    .footer-content {
+        gap: 1.5rem;
     }
 }
 

@@ -1,8 +1,23 @@
 /* Payment Page Styles */
+.nav-brand .logo-header {
+    height: 120px;
+    width: auto;
+    margin-left: 0;
+}
+
+.payment-nav {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0.25rem 20px 0.25rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .payment-main {
     min-height: 100vh;
     background: var(--background-light);
-    padding-top: 80px;
+    padding-top: 140px;
 }
 
 .payment-container {
@@ -504,13 +519,76 @@
 }
 
 /* Responsive Design */
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .nav-container {
+        max-width: 100%;
+        padding: 0 20px 0 0;
+    }
+    
+    .nav-logo .logo-header {
+        height: 100px;
+    }
+}
+
 @media (max-width: 768px) {
+    .nav-menu {
+        position: fixed;
+        left: -100%;
+        top: 70px;
+        flex-direction: column;
+        background-color: var(--background-white);
+        width: 100%;
+        text-align: center;
+        transition: 0.3s;
+        box-shadow: var(--shadow-md);
+        padding: 2rem 0;
+    }
+
+    .nav-menu.active {
+        left: 0;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .hamburger.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .hamburger.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+    
+    .nav-container {
+        padding: 0 15px 0 0;
+    }
+    
+    .nav-logo .logo-header {
+        height: 80px;
+    }
+    
+    .payment-main {
+        padding-top: 120px;
+    }
+    
     .payment-container {
         padding: 1rem;
+        max-width: 95%;
     }
     
     .packages-grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .package-card {
+        padding: 1.5rem;
     }
     
     .form-row {
@@ -535,6 +613,38 @@
     .success-actions,
     .error-actions {
         flex-direction: column;
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-container {
+        padding: 0 10px 0 0;
+    }
+    
+    .nav-logo .logo-header {
+        height: 60px;
+    }
+    
+    .payment-main {
+        padding-top: 100px;
+    }
+    
+    .payment-container {
+        padding: 0.5rem;
+    }
+    
+    .package-card {
+        padding: 1rem;
+    }
+    
+    .package-price {
+        font-size: 2rem;
+    }
+    
+    .btn {
+        font-size: 0.875rem;
+        padding: 0.6rem 1.5rem;
     }
 }
 

@@ -13,13 +13,33 @@
 <body>
     <!-- Header -->
     <header class="header">
-        <nav class="nav">
-            <div class="nav-brand">
-                <h2>Idiomas Avanza</h2>
-            </div>
-            <div class="nav-links">
-                <a href="index.html" class="nav-link">Inicio</a>
-                <a href="portal.html" class="nav-link">Portal</a>
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <img src="assets/Vectorizados/LOGO2.svg" alt="Idiomas Avanza" class="logo-header">
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="cursos.html" class="nav-link">Cursos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="certificaciones.html" class="nav-link">Certificaciones</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="biblioteca.html" class="nav-link">Biblioteca</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="portal.html" class="nav-link btn-login">Portal de Alumnos</a>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
             </div>
         </nav>
     </header>
@@ -229,5 +249,28 @@
     </div>
 
     <script src="payment.js"></script>
+    <script>
+        // Mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.querySelector('.nav-menu');
+            
+            if (hamburger && navMenu) {
+                hamburger.addEventListener('click', function() {
+                    hamburger.classList.toggle('active');
+                    navMenu.classList.toggle('active');
+                });
+                
+                // Close menu when clicking on a link
+                const navLinks = document.querySelectorAll('.nav-link');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        hamburger.classList.remove('active');
+                        navMenu.classList.remove('active');
+                    });
+                });
+            }
+        });
+    </script>
 </body>
 </html>

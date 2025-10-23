@@ -12,7 +12,7 @@
 .portal-nav {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 1rem 2rem;
+    padding: 0.25rem 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -28,6 +28,16 @@
     color: var(--primary-color);
     font-weight: 700;
     font-size: 1.5rem;
+}
+
+.nav-left .logo-header {
+    height: 120px;
+    width: auto;
+    margin-left: 0;
+}
+
+.nav-right {
+    margin-right: 20px;
 }
 
 .portal-title {
@@ -691,7 +701,11 @@
     }
     
     .portal-nav {
-        padding: 1rem;
+        padding: 0.5rem 20px 0.5rem 0;
+    }
+    
+    .nav-left .logo-header {
+        height: 100px;
     }
 }
 
@@ -699,6 +713,7 @@
     .sidebar {
         transform: translateX(-100%);
         transition: transform 0.3s ease;
+        z-index: 1001;
     }
     
     .sidebar.open {
@@ -711,11 +726,15 @@
     }
     
     .portal-nav {
-        padding: 1rem;
+        padding: 0.5rem 15px 0.5rem 0;
     }
     
     .nav-left {
         gap: 1rem;
+    }
+    
+    .nav-left .logo-header {
+        height: 80px;
     }
     
     .portal-title {
@@ -728,6 +747,12 @@
     
     .dashboard-grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
     }
     
     .schedule-card {
@@ -743,6 +768,7 @@
     
     .books-grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
     
     .table-header,
@@ -753,6 +779,49 @@
     
     .form-row {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-left .logo-header {
+        height: 60px;
+    }
+    
+    .portal-nav {
+        padding: 0.25rem 10px 0.25rem 0;
+    }
+    
+    .content-area {
+        padding: 0.5rem;
+    }
+    
+    .dashboard-grid {
+        gap: 1rem;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .stat-card {
+        padding: 1rem;
+    }
+    
+    .card-number {
+        font-size: 1.5rem;
+    }
+    
+    .books-grid {
+        gap: 1rem;
+    }
+    
+    .book-card {
+        padding: 1rem;
+    }
+    
+    .btn {
+        font-size: 0.875rem;
+        padding: 0.5rem 1rem;
     }
     
     .conversation-rooms {
