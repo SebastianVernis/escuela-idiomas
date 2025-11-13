@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import AdminHeader from '../components/AdminHeader'
 import { 
   Users, 
   BookOpen, 
@@ -466,51 +467,11 @@ const Admin = () => {
 
   const AdminDashboard = () => (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200">
-        <div className="px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">Panel de Administración</h1>
-              <p className="text-gray-600">Idiomas Avanza - Dashboard</p>
-            </div>
-            <div className="flex items-center gap-4">
-              <button className="btn btn-ghost">
-                <Bell size={20} />
-              </button>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-primary-600 rounded-full flex items-center justify-center text-white font-bold">
-                  A
-                </div>
-                <div>
-                  <div className="font-medium text-gray-900">Administrador</div>
-                  <div className="text-sm text-gray-500">admin@idiomasavanza.com</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Navigation */}
-      <div className="px-6 py-4 bg-white border-b border-gray-200">
-        <nav className="flex gap-1">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-all ${
-                activeTab === tab.id
-                  ? 'bg-primary-100 text-primary-700'
-                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-              }`}
-            >
-              <tab.icon size={16} />
-              {tab.label}
-            </button>
-          ))}
-        </nav>
-      </div>
+      <AdminHeader 
+        activeTab={activeTab} 
+        setActiveTab={setActiveTab} 
+        tabs={tabs} 
+      />
 
       {/* Content */}
       <main className="p-6">

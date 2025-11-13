@@ -125,13 +125,13 @@ const Home = () => {
         <div className="container relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-8">
-              <Star className="text-yellow-300" size={16} />
+              <Star className="text-orange-400" size={16} />
               <span className="text-sm font-medium">Valorado 4.9/5 por más de 50,000 estudiantes</span>
             </div>
             
             <h1 className="text-5xl lg:text-7xl font-extrabold mb-6 leading-tight">
               Domina Cualquier 
-              <span className="text-yellow-300"> Idioma</span>
+              <span className="text-orange-500"> Idioma</span>
               <br />Con Confianza
             </h1>
             
@@ -281,7 +281,7 @@ const Home = () => {
               <div key={index} className="card card-body">
                 <div className="flex items-center gap-1 mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="text-yellow-400 fill-current" size={16} />
+                    <Star key={i} className="text-orange-500 fill-current" size={16} />
                   ))}
                 </div>
                 
