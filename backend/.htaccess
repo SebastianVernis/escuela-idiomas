@@ -1,0 +1,57 @@
+RewriteEngine On
+
+# Habilitar CORS para todas las rutas
+Header always set Access-Control-Allow-Origin "*"
+Header always set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+Header always set Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With"
+
+# Manejar preflight requests
+RewriteCond %{REQUEST_METHOD} OPTIONS
+RewriteRule ^(.*)$ $1 [R=200,L]
+
+# API Routes
+RewriteRule ^api/auth/login$ api/auth.php [L]
+RewriteRule ^api/auth/register$ api/auth.php [L]
+RewriteRule ^api/auth/logout$ api/auth.php [L]
+RewriteRule ^api/auth/verify$ api/auth.php [L]
+
+RewriteRule ^api/dashboard$ api/dashboard.php [L]
+
+RewriteRule ^api/library/personal$ api/library.php [L]
+RewriteRule ^api/library/search$ api/library.php [L]
+RewriteRule ^api/library/stats$ api/library.php [L]
+RewriteRule ^api/library/download$ api/library.php [L]
+RewriteRule ^api/library/stream$ api/library.php [L]
+RewriteRule ^api/library/([0-9]+)$ api/library.php [L]
+RewriteRule ^api/library$ api/library.php [L]
+
+RewriteRule ^api/schedule/my-schedule$ api/schedule.php [L]
+RewriteRule ^api/schedule/conversation-rooms$ api/schedule.php [L]
+RewriteRule ^api/schedule/upcoming$ api/schedule.php [L]
+RewriteRule ^api/schedule/join-class$ api/schedule.php [L]
+RewriteRule ^api/schedule/join-conversation$ api/schedule.php [L]
+RewriteRule ^api/schedule$ api/schedule.php [L]
+
+# Bloquear acceso directo a archivos de configuración
+<Files "*.php">
+    Order Deny,Allow
+    Deny from all
+</Files>
+
+<Files "api/*.php">
+    Order Allow,Deny
+    Allow from all
+</Files>
+
+<Files "setup.php">
+    Order Allow,Deny
+    Allow from all
+</Files>
+
+# Configuración de seguridad
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options nosniff
+    Header always set X-Frame-Options DENY
+    Header always set X-XSS-Protection "1; mode=block"
+</IfModule>
+

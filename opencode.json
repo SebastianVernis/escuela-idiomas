@@ -1,0 +1,24 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "blackboxai": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "BlackboxAI",
+      "options": {
+        "baseURL": "https://api.blackboxai.ai/chat/completions",
+        "headers": {
+          "Authorization": "Bearer $BLACKBOX_API_KEY",
+	}
+      },
+      "models": {
+        "blackboxai/antropic/claude-4-sonnet": {
+          "name": "Claude Sonnet 4",
+          "limit": {
+            "context": 200000,
+            "output": 65536,
+          }
+        }
+      }
+    }
+  }
+}
